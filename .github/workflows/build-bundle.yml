@@ -40,7 +40,7 @@ jobs:
         run: sudo apt install patch
 
       - name: Install tectonic
-        run: wget ${{ github.event.inputs.Tectonic }} && tar -zxvf *.xz && sudo mv ./tectonic /usr/local/bin
+        run: wget ${{ github.event.inputs.Tectonic }} && tar -zxvf *.gz && sudo mv ./tectonic /usr/local/bin
 
       - name: Run a multi-line script
         run: bash ./build.sh ${{ github.event.inputs.Version }} ${{ github.event.inputs.Bundle }}
