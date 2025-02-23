@@ -42,7 +42,7 @@ jobs:
       - name: Install tectonic
         run: wget ${{ github.event.inputs.Tectonic }} && tar -zxvf *.gz && sudo mv ./tectonic /usr/local/bin
 
-      - name: Run a multi-line script
+      - name: Run build.sh
         run: bash ./build.sh ${{ github.event.inputs.Version }} ${{ github.event.inputs.Bundle }}
 
       - name: Release
