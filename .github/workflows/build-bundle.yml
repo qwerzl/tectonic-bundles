@@ -45,9 +45,21 @@ jobs:
       - name: Run build.sh
         run: bash ./build.sh ${{ github.event.inputs.Version }} ${{ github.event.inputs.Bundle }}
 
+      - name: Set up GitHub CLI
+        run: sudo apt-get install gh -y
+        
+      - name: Authenticate GitHub CLI
+        run: gh auth login --with-token <<< ${{ secrets.GITHUB_TOKEN }}
+        
+      - name: Create new Git tag
+        run: |
+          git tag v${{ github.event.inputs.Version }}-${{ steps.date.outputs.date }}
+          git push origin v${{ github.event.inputs.Version }}-${{ steps.date.outputs.date }}
+          
       - name: Release
         uses: softprops/action-gh-release@v2
         with:
+          tag_name: 'v${{ github.event.inputs.Version }}-${{ steps.date.outputs.date }}'
           name: ${{ github.event.inputs.Version }}-${{ steps.date.outputs.date }}
           files: ./tectonic/bundles/bundles/build/${{ github.event.inputs.Version }}/${{ github.event.inputs.Version }}.ttb
           prerelease: true
